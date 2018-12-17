@@ -1,0 +1,44 @@
+<% if can? :update, @task %>
+  <%= link_to 'Edit', edit_project_task_path(@project, @task) %> |
+<% end %>
+<%= link_to 'Back', project_tasks_path %>
+<div class="jumbotron">
+  <p id="notice"><%= notice %></p>
+
+	<p>
+	  <strong>Title:</strong>
+	  <%= @task.title %>
+	</p>
+
+	<p>
+	  <strong>Desc:</strong>
+	  <%= @task.desc %>
+	</p>
+
+	<% if @task.developer.present? %>
+		<p>
+		  <strong>Assign To:</strong>
+		  <%= @task.developer.email %>
+		</p>
+	<% end %>
+
+	<p>
+	  <strong>Status:</strong>
+	  <%= @task.status %>
+	</p>
+  
+  <p>
+    <strong>Move To:</strong>
+		<% if (can? :update_status, @task) && @task.status != Task::STATUS['new'] %>
+		  <%= button_to 'New', update_status_project_task_path(@project, @task, status: 'new'), form: {style: "display: inline-block;"}, class: "btn btn-primary" %>
+		<% end %>
+
+		<% if (can? :update_status, @task) && @task.status != Task::STATUS['in_progress'] %>
+		  <%= button_to 'In Progress', update_status_project_task_path(@project, @task, status: 'in_progress') , form: {style: "display: inline-block;"}, class: "btn btn-success"%>
+		<% end %>
+
+		<% if (can? :update_status, @task) && @task.status != Task::STATUS['done'] %>
+		  <%= button_to 'Done', update_status_project_task_path(@project, @task, status: 'done'), form: {style: "display: inline-block;"}, class: "btn btn-secondary" %>
+		<% end %>
+	</p>
+</div>

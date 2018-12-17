@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Promobi</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+  <%= link_to "ProMobi", root_path, class: "navbar-brand"%>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <%= link_to 'Projects', projects_path, class: "nav-link"%>
+      </li>
+      <% if @project && !@project.new_record?%>
+	      <li class="nav-item">
+	        <%= link_to 'Tasks', project_tasks_path(@project), class: "nav-link"%>
+	      </li>
+      <% end %>
+    </ul>
+    <% if user_signed_in? %>
+      <a class="nav-link" href="#"><%= current_user.email %></a>
+		  <%= button_to('Logout', destroy_user_session_path, method: :delete, class: "btn btn-outline-success my-2 my-sm-0") %>
+		<% else %>
+		  <%= button_to('Login', new_user_session_path, class: "btn btn-outline-success my-2 my-sm-0")  %>
+		<% end %>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <%= yield %>
+</div>
+
+</body>
+</html>

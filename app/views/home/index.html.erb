@@ -1,0 +1,79 @@
+<% if current_user.admin? %>
+<h3>Dashboard</h3>
+
+<table class="table table-bordered table-dark">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <% @developers.each do |dev| %>
+        <th><%= dev.email%></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+		  <td>Done</td>
+		  <% @developers.each do |dev| %>
+        <td>
+         <%= raw dev.task_titles_by(status: Task::STATUS['done']).join("<br />")%>
+        </th>
+      <% end %>
+	  </tr>
+	  <tr>
+		  <td>In Progress</td>
+		  <% @developers.each do |dev| %>
+        <td>
+        <%= raw dev.task_titles_by(status: Task::STATUS['in_progress']).join("<br />")%>
+        </th>
+      <% end %>
+	  </tr>
+	  <tr>
+		  <td>New</td>
+		  <% @developers.each do |dev| %>
+        <td>
+        <%= raw dev.task_titles_by(status: Task::STATUS['new']).join("<br />")%>
+        </th>
+      <% end %>
+	  </tr>
+  </tbody>
+</table>
+
+<table class="table table-bordered table-dark">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <% @projects.each do |project| %>
+        <th><%= project.name%></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+		  <td>Done</td>
+		  <% @projects.each do |project| %>
+        <td><%#= raw project.tasks.where(status: Task::STATUS['done']).pluck(:title).join("<br />")%>
+         <%= raw project.task_titles_by(status: Task::STATUS['done']).join("<br />")%>
+        </th>
+      <% end %>
+	  </tr>
+	  <tr>
+		  <td>In Progress</td>
+		  <% @projects.each do |project| %>
+        <td><%#= raw project.tasks.where(status: Task::STATUS['in_progress']).pluck(:title).join("<br />")%>
+        <%= raw project.task_titles_by(status: Task::STATUS['in_progress']).join("<br />")%>
+        </th>
+      <% end %>
+	  </tr>
+	  <tr>
+		  <td>New</td>
+		  <% @projects.each do |project| %>
+        <td><%#= raw project.tasks.where(status: Task::STATUS['new']).pluck(:title).join("<br />") %>
+        <%= raw project.task_titles_by(status: Task::STATUS['new']).join("<br />")%>
+        </th>
+      <% end %>
+	  </tr>
+  </tbody>
+</table>
+<% end %>

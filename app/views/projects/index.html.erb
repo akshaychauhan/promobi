@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Projects</h1>
+
+<table class="table table-bordered table-dark">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.name %></td>
+        <td><%= link_to 'Show', project, data: { turbolinks: false } %></td>
+        
+        <% if can? :update, project %>
+          <td><%= link_to 'Edit', edit_project_path(project) %></td>
+        <% end %>
+        <% if can? :update, project %>
+          <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<% if can? :create, Project %>
+  <%= link_to 'New Project', new_project_path %>
+<% end %>
